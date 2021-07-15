@@ -1,2 +1,3 @@
 # historycard-game
-A repository for a Unity project 
+A repository for a Unity mobile project
+

@@ -5,15 +5,26 @@ using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
-    string button;
+    #region Variables
+    //Public
+    public GameObject mainMenuPanel;
+    public GameObject connectionsPanel;
+    public GameObject optionsPanel;
+
+    //Private
+
+    #endregion
 
     private void Start()
     {
 
     }
 
+
+    //Change menu according to the string set in the button
     public void MenuTransition(string button)
     {
+        //Main menu buttons
         if(button == "Play")
         {
             Debug.Log("jogar");
@@ -21,11 +32,10 @@ public class MenuController : MonoBehaviour
         else if (button == "Options")
         {
             Debug.Log("opções");
-
         }
         else if (button == "Quit")
         {
-            Debug.Log("Sair");
+            Application.Quit();
         }
     }
 }

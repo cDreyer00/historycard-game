@@ -7,6 +7,8 @@ public class MenuController : MonoBehaviour
 {
     #region Variables
     //Public
+    [Space]
+    [Header("Panels")]
     public GameObject mainMenuPanel;
     public GameObject connectionsPanel;
     public GameObject optionsPanel;
@@ -25,13 +27,23 @@ public class MenuController : MonoBehaviour
     public void MenuTransition(string button)
     {
         //Main menu buttons
-        if(button == "Play")
+        if (button == "Play")
         {
-            Debug.Log("jogar");
+            connectionsPanel.SetActive(true);
+            optionsPanel.SetActive(false);
+            mainMenuPanel.SetActive(false);
         }
         else if (button == "Options")
         {
-            Debug.Log("opções");
+            connectionsPanel.SetActive(false);
+            optionsPanel.SetActive(true);
+            mainMenuPanel.SetActive(false);
+        }
+        else if (button == "Return")
+        {
+            connectionsPanel.SetActive(false);
+            optionsPanel.SetActive(false);
+            mainMenuPanel.SetActive(true);
         }
         else if (button == "Quit")
         {
@@ -39,3 +51,5 @@ public class MenuController : MonoBehaviour
         }
     }
 }
+
+

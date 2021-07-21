@@ -370,9 +370,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1d0be76491539f418f16746ad90936e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuPanel: {fileID: 0}
-  connectionsPanel: {fileID: 0}
-  optionsPanel: {fileID: 0}
+  mainMenuPanel: {fileID: 523442685}
+  connectionsPanel: {fileID: 1304211819}
+  optionsPanel: {fileID: 929288474}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

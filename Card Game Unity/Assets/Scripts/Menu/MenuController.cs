@@ -48,6 +48,15 @@ public class MenuController : MonoBehaviour
         else if (button == "Quit")
         {
             Application.Quit();
+        }        
+        //Connection Menu buttons
+        else if(button == "Enter Room")
+        {
+
+        }
+        else if (button == "Create Room")
+        {
+
         }
     }
 }

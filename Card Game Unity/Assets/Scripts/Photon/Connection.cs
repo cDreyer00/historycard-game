@@ -28,6 +28,8 @@ public class Connection : MonoBehaviourPunCallbacks
         RandomKey();
         Debug.Log("the room code is: " + RoomCode);
         PhotonNetwork.CreateRoom(RoomCode, roomOptions);
+
+        PhotonNetwork.LoadLevel("Game Scene");
     }
     public override void OnConnected()
     {

@@ -14,7 +14,6 @@ public class MenuController : MonoBehaviour
     public GameObject optionsPanel;
 
     //Private
-
     #endregion
 
     private void Start()
@@ -48,11 +47,12 @@ public class MenuController : MonoBehaviour
         else if (button == "Quit")
         {
             Application.Quit();
-        }        
+        }
+
         //Connection Menu buttons
         else if(button == "Enter Room")
         {
-
+            Connection.instance.Connect();
         }
         else if (button == "Create Room")
         {

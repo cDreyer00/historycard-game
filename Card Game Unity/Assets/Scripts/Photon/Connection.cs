@@ -2,11 +2,14 @@
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Connection : MonoBehaviourPunCallbacks
 {
     public static Connection instance;
+
+    public static string RoomCode;
     private void Awake()
     {
         instance = this;
@@ -21,7 +24,10 @@ public class Connection : MonoBehaviourPunCallbacks
     {
         Debug.Log("connected to master");
         RoomOptions roomOptions = new RoomOptions() { IsVisible = true, MaxPlayers = 5 };
-        PhotonNetwork.CreateRoom("TestRoom", roomOptions);
+
+        RandomKey();
+        Debug.Log("the room code is: " + RoomCode);
+        PhotonNetwork.CreateRoom(RoomCode, roomOptions);
     }
     public override void OnConnected()
     {
@@ -32,5 +38,17 @@ public class Connection : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("joined room");
+    }
+
+    
+    void RandomKey()
+    {
+        int charAmount = Random.Range(4, 5);
+        const string glyphs = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+        for (int i = 0; i < charAmount; i++)
+        {
+            RoomCode += glyphs[Random.Range(0, glyphs.Length)];
+        }
     }
 }

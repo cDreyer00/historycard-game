@@ -1,9 +1,10 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Connection : MonoBehaviour
+public class Connection : MonoBehaviourPunCallbacks
 {
     public static Connection instance;
     private void Awake()
@@ -16,8 +17,20 @@ public class Connection : MonoBehaviour
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    void OnJoinedLobby()
+    public override void OnConnectedToMaster()
     {
-        Debug.Log("joined Loby");
+        Debug.Log("connected to master");
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, MaxPlayers = 5 };
+        PhotonNetwork.CreateRoom("TestRoom", roomOptions);
+    }
+    public override void OnConnected()
+    {
+        Debug.Log("connected");
+
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("joined room");
     }
 }

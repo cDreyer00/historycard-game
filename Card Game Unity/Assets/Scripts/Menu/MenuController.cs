@@ -27,6 +27,9 @@ public class MenuController : MonoBehaviour
         mainMenuPanel.SetActive(true);
         connectionsPanel.SetActive(false);
         optionsPanel.SetActive(false);
+        enterRoomPanel.SetActive(false);
+        createRoomPanel.SetActive(false);
+
         
     }
 

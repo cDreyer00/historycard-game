@@ -9,53 +9,45 @@ public class MenuController : MonoBehaviour
     //Public
     [Space]
     [Header("Panels")]
-    public GameObject mainMenuPanel;
+    public GameObject mainMenuPanel; 
     public GameObject connectionsPanel;
     public GameObject optionsPanel;
+
+    [Space]
+    [Header("Connection Panels")]
+    public GameObject enterRoomPanel;
+    public GameObject createRoomPanel;
 
     //Private
     #endregion
 
     private void Start()
     {
-
+        //set the main menu as active only
+        mainMenuPanel.SetActive(true);
+        connectionsPanel.SetActive(false);
+        optionsPanel.SetActive(false);
+        
     }
 
 
     //Change menu according to the string set in the button
     public void MenuTransition(string button)
     {
-        //Main menu buttons
-        if (button == "Play")
-        {
-            connectionsPanel.SetActive(true);
-            optionsPanel.SetActive(false);
-            mainMenuPanel.SetActive(false);
-        }
-        else if (button == "Options")
-        {
-            connectionsPanel.SetActive(false);
-            optionsPanel.SetActive(true);
-            mainMenuPanel.SetActive(false);
-        }
-        else if (button == "Return")
-        {
-            connectionsPanel.SetActive(false);
-            optionsPanel.SetActive(false);
-            mainMenuPanel.SetActive(true);
-        }
-        else if (button == "Quit")
+        //Close game
+        if (button == "Quit")
         {
             Application.Quit();
         }
-
-        //Connection Menu buttons
+        //Enter a room
         else if(button == "Enter Room")
         {
-            Connection.instance.Connect();
+
         }
+        //Create and connect to a room
         else if (button == "Create Room")
         {
+            Connection.instance.Connect();
 
         }
     }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Linq;
 
 public class Connection : MonoBehaviourPunCallbacks
 {
@@ -32,6 +33,7 @@ public class Connection : MonoBehaviourPunCallbacks
         else
         {
             JoinExistentRoom();
+            PhotonNetwork.JoinRoom(MenuController.instance.roomCodeIF.text);
         }
     }
     public override void OnConnected()
@@ -48,8 +50,10 @@ public class Connection : MonoBehaviourPunCallbacks
     void JoinExistentRoom()
     {
         Debug.Log("Entering...");
-        PhotonNetwork.JoinRoom(MenuController.instance.roomCodeIF.text);
-        PhotonNetwork.LoadLevel("Game Scene");
+        
+
+        // PhotonNetwork.LoadLevel("Game Scene");
+
     }
 
     void CreateRoom()

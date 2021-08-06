@@ -66,8 +66,6 @@ public class MenuController : MonoBehaviour
         {
             Connection.instance.Connect();
             Connection.Create = true;
-
-
         }
     }
 }

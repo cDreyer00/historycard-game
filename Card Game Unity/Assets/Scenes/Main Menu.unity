@@ -620,7 +620,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Entrar
+          m_StringArgument: Enter Room
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &260584349
@@ -782,6 +782,9 @@ MonoBehaviour:
   optionsPanel: {fileID: 1304211819}
   enterRoomPanel: {fileID: 804375015}
   createRoomPanel: {fileID: 666779654}
+  nickNameJoinIF: {fileID: 1630655688}
+  nickNameCreateIF: {fileID: 512539776}
+  roomCodeIF: {fileID: 598346247}
 --- !u!114 &403669401
 MonoBehaviour:
   m_ObjectHideFlags: 0

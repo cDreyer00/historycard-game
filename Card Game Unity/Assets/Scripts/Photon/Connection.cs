@@ -10,6 +10,7 @@ public class Connection : MonoBehaviourPunCallbacks
     public static Connection instance;
 
     public static string RoomCode;
+    public static bool Create;
     private void Awake()
     {
         instance = this;
@@ -23,13 +24,15 @@ public class Connection : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("connected to master");
-        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, MaxPlayers = 5 };
 
-        RandomKey();
-        Debug.Log("the room code is: " + RoomCode);
-        PhotonNetwork.CreateRoom(RoomCode, roomOptions);
-
-        PhotonNetwork.LoadLevel("Game Scene");
+        if (Create)
+        {
+            CreateRoom();
+        }
+        else
+        {
+            JoinExistentRoom();
+        }
     }
     public override void OnConnected()
     {
@@ -42,7 +45,29 @@ public class Connection : MonoBehaviourPunCallbacks
         Debug.Log("joined room");
     }
 
-    
+    void JoinExistentRoom()
+    {
+        Debug.Log("Entering...");
+        PhotonNetwork.JoinRoom(MenuController.instance.roomCodeIF.text);
+        PhotonNetwork.LoadLevel("Game Scene");
+    }
+
+    void CreateRoom()
+    {
+        Debug.Log("Creating...");
+
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, MaxPlayers = 5 }; // cria sala
+
+        RandomKey();
+        Debug.Log("the room code is: " + RoomCode);
+        PhotonNetwork.CreateRoom(RoomCode, roomOptions);
+
+        PhotonNetwork.LoadLevel("Game Scene");
+
+    }
+
+
+    //gerador de senha de sala
     void RandomKey()
     {
         int charAmount = Random.Range(4, 5);

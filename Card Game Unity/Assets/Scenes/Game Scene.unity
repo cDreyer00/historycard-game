@@ -1256,6 +1256,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomCode: {fileID: 1149819824}
+  timerText: {fileID: 1108206213}
+  playerNameText: {fileID: 295992066}
 --- !u!1 &2114315029
 GameObject:
   m_ObjectHideFlags: 0

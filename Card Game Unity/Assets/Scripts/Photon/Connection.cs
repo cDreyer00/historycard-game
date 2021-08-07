@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using System.Linq;
+
 
 public class Connection : MonoBehaviourPunCallbacks
 {
@@ -29,28 +29,34 @@ public class Connection : MonoBehaviourPunCallbacks
         if (Create)
         {
             CreateRoom();
+            PlayerPrefs.SetString("Nick", MenuController.instance.nickNameCreateIF.text);
         }
         else
         {
             JoinExistentRoom();
             PhotonNetwork.JoinRoom(MenuController.instance.roomCodeIF.text);
+            PlayerPrefs.SetString("Nick", MenuController.instance.nickNameJoinIF.text);
+            
+            
         }
     }
+    
     public override void OnConnected()
     {
         Debug.Log("connected");
+
 
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log("joined room");
+
     }
 
     void JoinExistentRoom()
     {
         Debug.Log("Entering...");
-        
 
         // PhotonNetwork.LoadLevel("Game Scene");
 
@@ -65,6 +71,7 @@ public class Connection : MonoBehaviourPunCallbacks
         RandomKey();
         Debug.Log("the room code is: " + RoomCode);
         PhotonNetwork.CreateRoom(RoomCode, roomOptions);
+
 
         PhotonNetwork.LoadLevel("Game Scene");
 

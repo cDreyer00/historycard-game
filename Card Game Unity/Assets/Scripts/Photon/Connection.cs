@@ -61,22 +61,33 @@ public class Connection : MonoBehaviourPunCallbacks
         // PhotonNetwork.LoadLevel("Game Scene");
 
     }
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        PhotonNetwork.Disconnect();
+    }
 
     void CreateRoom()
     {
         Debug.Log("Creating...");
 
-        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, MaxPlayers = 5 }; // cria sala
+        RoomOptions roomOptions = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 5 }; // cria sala
 
         RandomKey();
         Debug.Log("the room code is: " + RoomCode);
         PhotonNetwork.CreateRoom(RoomCode, roomOptions);
 
 
+
+    }
+    public override void OnCreatedRoom()
+    {
         PhotonNetwork.LoadLevel("Game Scene");
 
     }
-
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        base.OnCreateRoomFailed(returnCode, message);
+    }
 
     //gerador de senha de sala
     void RandomKey()

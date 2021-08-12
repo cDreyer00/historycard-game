@@ -51,6 +51,7 @@ public class Connection : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("joined room");
+        PhotonNetwork.LoadLevel("Game Scene");
 
     }
 
@@ -58,11 +59,11 @@ public class Connection : MonoBehaviourPunCallbacks
     {
         Debug.Log("Entering...");
 
-        // PhotonNetwork.LoadLevel("Game Scene");
 
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
+        Debug.LogError("cannot join the room");
         PhotonNetwork.Disconnect();
     }
 
@@ -81,19 +82,20 @@ public class Connection : MonoBehaviourPunCallbacks
     }
     public override void OnCreatedRoom()
     {
+        Debug.Log("room created");
         PhotonNetwork.LoadLevel("Game Scene");
 
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        base.OnCreateRoomFailed(returnCode, message);
+        Debug.LogError("Cannot create the room");
     }
 
     //gerador de senha de sala
     void RandomKey()
     {
         int charAmount = Random.Range(4, 5);
-        const string glyphs = "abcdefghijklmnopqrstuvwxyz0123456789";
+        const string glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         for (int i = 0; i < charAmount; i++)
         {

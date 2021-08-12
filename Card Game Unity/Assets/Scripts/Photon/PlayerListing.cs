@@ -7,33 +7,33 @@ using UnityEngine;
 
 public class PlayerListing : MonoBehaviourPunCallbacks
 {
-    public static PlayerListing instance;
+    public static PlayerListing instance; // singleton 
 
     PhotonView pv;
 
     private void Awake()
     {
-        instance = this;
+        instance = this; // refereincia o singleton
     }
     private void Start()
     {
+        // referencia o PV e puxa a função de lsitar player
         pv = GetComponent<PhotonView>();
-
         pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         
     }
 
     [PunRPC]
-    public void NewPlayer(string Nick)
+    public void NewPlayer(string Nick) // cria objeto no canvas de texto com o nome do player que conectou
     {
         GameObject newText = PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
 
-        newText.transform.parent = this.transform;
+        newText.transform.SetParent(this.transform);
 
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
 

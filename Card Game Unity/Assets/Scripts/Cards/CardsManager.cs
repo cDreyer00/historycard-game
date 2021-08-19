@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class CardsManager : MonoBehaviour
+public class CardsManager : MonoBehaviourPunCallbacks
 {
     public Sprite[] cards;
 
@@ -20,19 +22,25 @@ public class CardsManager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (CanInteract)
+        if (photonView.IsMine)
         {
-            // cria uma carta aleatória dentre as opções
-            GameObject Card = new GameObject("Card from " + gameObject.name, typeof(SpriteRenderer), typeof(BoxCollider));
-            Card.transform.position = transform.position - new Vector3(0, 2, 0);
-            Card.GetComponent<SpriteRenderer>().sprite = cards[Random.Range(0, cards.Length)];
-
-            transform.position = transform.position + new Vector3(0, 2, 0); // sobe o deck de cartas ja retirada
-
-            CanInteract = false; // impede de interagir novamente
+            if (CanInteract)
+            {
+                photonView.RPC("PickCard", RpcTarget.All, Random.Range(0, cards.Length));
+            }
         }
+    }
 
+    [PunRPC]
+    void PickCard(int card)
+    {
+        // cria uma carta aleatória dentre as opções
+        GameObject CardObject = new GameObject("Card from " + gameObject.name, typeof(SpriteRenderer), typeof(BoxCollider));
+        CardObject.transform.position = transform.position - new Vector3(0, 2, 0);
+        CardObject.GetComponent<SpriteRenderer>().sprite = cards[card];
 
+        transform.position = transform.position + new Vector3(0, 2, 0); // sobe o deck de cartas ja retirada
 
+        CanInteract = false; // impede de interagir novamente
     }
 }

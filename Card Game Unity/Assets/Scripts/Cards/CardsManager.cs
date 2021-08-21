@@ -36,6 +36,8 @@ public class CardsManager : MonoBehaviourPunCallbacks
     {
         // cria uma carta aleatória dentre as opções
         GameObject CardObject = new GameObject("Card from " + gameObject.name, typeof(SpriteRenderer), typeof(BoxCollider));
+
+        CardObject.transform.localScale = transform.localScale;
         CardObject.transform.position = transform.position - new Vector3(0, 2, 0);
         CardObject.GetComponent<SpriteRenderer>().sprite = cards[card];
 

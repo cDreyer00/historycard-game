@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f0db558f3b6e31543bd4811d2f2a3a26, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d3c52456aa3e6cf498313ae1864e8a78, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +95,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Size: {x: 7, y: 10, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7337830807512317741
 MonoBehaviour:
@@ -109,10 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9316b46c48518a24ea8a324b0436abeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards:
-  - {fileID: 21300000, guid: fd47c8b4ebfbd4339858d4d23f587519, type: 3}
-  - {fileID: 21300000, guid: bd293dc32f4aaf94e8274f2fac2cdf89, type: 3}
-  - {fileID: 21300000, guid: 56bbc6b42271d4177ac313247f47ac1f, type: 3}
+  cards: []
 --- !u!114 &-3861689695584420301
 MonoBehaviour:
   m_ObjectHideFlags: 0

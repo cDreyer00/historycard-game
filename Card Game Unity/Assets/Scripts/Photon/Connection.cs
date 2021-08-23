@@ -63,7 +63,7 @@ public class Connection : MonoBehaviourPunCallbacks
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.LogError("cannot join the room");
+        Debug.LogError("cannot join the room " + returnCode + message);
         PhotonNetwork.Disconnect();
     }
 

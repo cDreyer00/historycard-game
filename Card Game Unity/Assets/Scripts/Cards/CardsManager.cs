@@ -42,6 +42,9 @@ public class CardsManager : MonoBehaviourPunCallbacks
         CardObject.transform.localScale = transform.localScale;
         CardObject.transform.position = transform.position - new Vector3(0, 2, 0);
         CardObject.GetComponent<SpriteRenderer>().sprite = cards[card];
+        CardObject.GetComponent<BoxCollider2D>().size = gameObject.GetComponent<BoxCollider2D>().size;
+
+        CardObject.AddComponent<VisualizeCard>();
 
         transform.position = transform.position + new Vector3(0, 2, 0); // sobe o deck de cartas ja retirada
 

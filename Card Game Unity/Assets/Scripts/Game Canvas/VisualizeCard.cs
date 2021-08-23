@@ -5,18 +5,22 @@ using UnityEngine.UI;
 
 public class VisualizeCard : MonoBehaviour
 {
-    public GameObject visualizePanel;
+
 
     private void Start()
     {
-        visualizePanel = GameObject.Find("CardsVisualizer_Panel");
+
     }
-    private void OnMouseDown()
+    private void OnMouseUp()
     {
-        
+        ExpandCard();
     }
+
     public void ExpandCard()
     {
+        CanvasController.instance.visualizePanel.SetActive(true);
+        GameObject Card = CanvasController.instance.visualizePanel.transform.Find("Card Expanded").gameObject;
 
+        Card.GetComponent<Image>().sprite = GetComponent<SpriteRenderer>().sprite;
     }
 }

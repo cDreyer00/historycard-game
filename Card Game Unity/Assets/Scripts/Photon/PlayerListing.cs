@@ -13,11 +13,11 @@ public class PlayerListing : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        instance = this; // refereincia o singleton
+        instance = this;
     }
     private void Start()
     {
-        // referencia o PV e puxa a função de lsitar player
+        // referencia o PV e puxa a função de listar player
         pv = GetComponent<PhotonView>();
         pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
     }
@@ -34,7 +34,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         GameObject newText = PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
 
         newText.transform.SetParent(this.transform);
-
+        newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
 
     }

@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 
@@ -10,6 +11,7 @@ public class Connection : MonoBehaviourPunCallbacks
 {
     public static Connection instance;
 
+    public TextMeshProUGUI connectionText;
     public static string RoomCode;
     public static bool Create;
     private void Awake()
@@ -20,31 +22,35 @@ public class Connection : MonoBehaviourPunCallbacks
     public void Connect()
     {
         PhotonNetwork.ConnectUsingSettings();
+        connectionText.text = "Conectando...";
     }
 
     public override void OnConnectedToMaster()
     {
         Debug.Log("connected to master");
+        connectionText.text = "Conectado";
+
 
         if (Create)
         {
+            connectionText.text = "Criando Sala...";
+
             CreateRoom();
             PlayerPrefs.SetString("Nick", MenuController.instance.nickNameCreateIF.text);
         }
         else
         {
+            connectionText.text = "Entrando na sala...";
+
             JoinExistentRoom();
             PhotonNetwork.JoinRoom(MenuController.instance.roomCodeIF.text);
             PlayerPrefs.SetString("Nick", MenuController.instance.nickNameJoinIF.text);
-            
-            
         }
     }
     
     public override void OnConnected()
     {
         Debug.Log("connected");
-
 
     }
 
@@ -58,12 +64,12 @@ public class Connection : MonoBehaviourPunCallbacks
     void JoinExistentRoom()
     {
         Debug.Log("Entering...");
-
-
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.LogError("cannot join the room " + message);
+        connectionText.text = "Não foi possivel se juntar a sala";
+
         PhotonNetwork.Disconnect();
     }
 
@@ -76,18 +82,18 @@ public class Connection : MonoBehaviourPunCallbacks
         RandomKey();
         Debug.Log("the room code is: " + RoomCode);
         PhotonNetwork.CreateRoom(RoomCode, roomOptions);
-
-
-
     }
     public override void OnCreatedRoom()
     {
         Debug.Log("room created");
+        connectionText.text = "Carregando...";
 
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.LogError("Cannot create the room");
+        connectionText.text = "Não foi possível criar a sala";
+
     }
 
     //gerador de senha de sala

@@ -53,6 +53,10 @@ public class Connection : MonoBehaviourPunCallbacks
         Debug.Log("connected");
 
     }
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log("Disconnected for: " + cause);
+    }
 
     public override void OnJoinedRoom()
     {

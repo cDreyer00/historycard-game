@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasController : MonoBehaviourPunCallbacks
 {
@@ -28,4 +29,15 @@ public class CanvasController : MonoBehaviourPunCallbacks
 
     }
 
+
+    public void ReturnToMenuButton()
+    {
+        PhotonNetwork.Disconnect();
+
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 }

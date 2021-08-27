@@ -33,7 +33,6 @@ public class CanvasController : MonoBehaviourPunCallbacks
     public void ReturnToMenuButton()
     {
         PhotonNetwork.Disconnect();
-
     }
 
     public override void OnDisconnected(DisconnectCause cause)

@@ -68,6 +68,11 @@ public class MenuController : MonoBehaviour
             Connection.Create = true;
         }
     }
+
+    public void SetCodeToUpper()
+    {
+        roomCodeIF.text = roomCodeIF.text.ToUpper();
+    }
 }
 
 

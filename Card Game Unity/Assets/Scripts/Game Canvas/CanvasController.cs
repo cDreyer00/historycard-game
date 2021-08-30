@@ -35,6 +35,11 @@ public class CanvasController : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
     }
 
+    public void PassTurn()
+    {
+
+    }
+
     public override void OnDisconnected(DisconnectCause cause)
     {
         SceneManager.LoadScene("Main Menu");

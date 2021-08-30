@@ -9,6 +9,9 @@ public class PlayerListing : MonoBehaviourPunCallbacks
 {
     public static PlayerListing instance; // singleton 
 
+    public TextMeshProUGUI myNick;
+    public bool myTurn;
+
     PhotonView pv;
 
     private void Awake()
@@ -25,7 +28,19 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     
     void Update()
     {
-        
+       
+        if (pv.IsMine)
+        {
+            // chama a função que muda a cor do nick
+            if (myTurn && myNick.color != Color.green)
+            {
+                pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+            }
+            else if (!myTurn && myNick.color != Color.white)
+            {
+                pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
+            }
+        }
     }
 
     [PunRPC]
@@ -37,5 +52,21 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
 
+        myNick = newText.GetComponent<TextMeshProUGUI>();
+
     }
+
+    [PunRPC]
+    void TurnCheck(bool _MyTurn) // Muda a cor do nick de acordo com o turno do player
+    {
+        if (_MyTurn)
+        {
+            myNick.color = Color.green;
+        }
+        else
+        {
+            myNick.color = Color.white;
+        }
+    }
+
 }

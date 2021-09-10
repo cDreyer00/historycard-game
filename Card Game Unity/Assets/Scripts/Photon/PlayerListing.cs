@@ -23,24 +23,30 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         // referencia o PV e puxa a função de listar player
         pv = GetComponent<PhotonView>();
         pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
+
+        if(PhotonNetwork.IsMasterClient && pv.IsMine)
+        {
+            Debug.Log("Master Entrou");
+            pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+        }
     }
 
     
     void Update()
     {
        
-        if (pv.IsMine)
-        {
-            // chama a função que muda a cor do nick
-            if (myTurn && myNick.color != Color.green)
-            {
-                pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
-            }
-            else if (!myTurn && myNick.color != Color.white)
-            {
-                pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
-            }
-        }
+        //if (pv.IsMine)
+        //{
+        //    // chama a função que muda a cor do nick
+        //    if (myTurn && myNick.color != Color.green)
+        //    {
+        //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+        //    }
+        //    else if (!myTurn && myNick.color != Color.white)
+        //    {
+        //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
+        //    }
+        //}
     }
 
     [PunRPC]
@@ -57,14 +63,18 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void TurnCheck(bool _MyTurn) // Muda a cor do nick de acordo com o turno do player
+    public void TurnCheck(bool _MyTurn) // Muda a cor do nick de acordo com o turno do player
     {
         if (_MyTurn)
         {
+            Debug.Log("Meu turno");
+
             myNick.color = Color.green;
         }
         else
         {
+            Debug.Log("Passei turno");
+
             myNick.color = Color.white;
         }
     }

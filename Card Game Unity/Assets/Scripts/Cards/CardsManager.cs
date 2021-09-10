@@ -9,7 +9,7 @@ public class CardsManager : MonoBehaviourPunCallbacks
 {
     public Sprite[] cards;
 
-    bool CanInteract = true;
+    bool CanInteract;
     void Start()
     {
         
@@ -18,7 +18,12 @@ public class CardsManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        
+        if(CanInteract != PlayerListing.instance.myTurn) // permite interagir com as cartas se for o turno certo
+        {
+            CanInteract = PlayerListing.instance.myTurn;
+            Debug.Log(CanInteract);
+        }
+
     }
 
     private void OnMouseDown()

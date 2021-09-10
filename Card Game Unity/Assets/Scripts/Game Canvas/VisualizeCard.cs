@@ -6,11 +6,6 @@ using UnityEngine.UI;
 public class VisualizeCard : MonoBehaviour
 {
 
-
-    private void Start()
-    {
-
-    }
     private void OnMouseUp()
     {
         ExpandCard();

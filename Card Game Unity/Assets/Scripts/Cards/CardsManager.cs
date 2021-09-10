@@ -10,19 +10,14 @@ public class CardsManager : MonoBehaviourPunCallbacks
     public Sprite[] cards;
 
     bool CanInteract;
+
     void Start()
     {
-        
+        CanInteract = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(CanInteract != PlayerListing.instance.myTurn) // permite interagir com as cartas se for o turno certo
-        {
-            CanInteract = PlayerListing.instance.myTurn;
-            Debug.Log(CanInteract);
-        }
 
     }
 
@@ -30,7 +25,7 @@ public class CardsManager : MonoBehaviourPunCallbacks
     {
         if (photonView.IsMine)
         {
-            if (CanInteract)
+            if (CanInteract && PlayerListing.instance.myTurn)
             {
                 photonView.RPC("PickCard", RpcTarget.All, Random.Range(0, cards.Length));
             }

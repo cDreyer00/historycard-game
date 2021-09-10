@@ -69,13 +69,14 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         if (_MyTurn)
         {
             Debug.Log("Meu turno");
-
+            myTurn = _MyTurn;
             myNick.color = Color.green;
+
         }
         else
         {
             Debug.Log("Passei turno");
-
+            myTurn = _MyTurn;
             myNick.color = Color.white;
         }
     }

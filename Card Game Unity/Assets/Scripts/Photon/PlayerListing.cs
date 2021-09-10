@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon.StructWrapping;
+using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +13,12 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     public TextMeshProUGUI myNick;
     public bool myTurn;
 
+
     [HideInInspector] 
     public PhotonView pv;
+
+    public int myID;
+    public List<int> playerIDs = new List<int>();
 
     private void Awake()
     {
@@ -30,24 +35,14 @@ public class PlayerListing : MonoBehaviourPunCallbacks
             Debug.Log("Master Entrou");
             pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
         }
+
+
     }
 
     
     void Update()
     {
-       
-        //if (pv.IsMine)
-        //{
-        //    // chama a função que muda a cor do nick
-        //    if (myTurn && myNick.color != Color.green)
-        //    {
-        //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
-        //    }
-        //    else if (!myTurn && myNick.color != Color.white)
-        //    {
-        //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
-        //    }
-        //}
+
     }
 
     [PunRPC]
@@ -60,6 +55,9 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
 
         myNick = newText.GetComponent<TextMeshProUGUI>();
+
+        myID = newText.GetComponent<PhotonView>().ViewID;
+        playerIDs.Add(newText.GetComponent<PhotonView>().ViewID);
 
     }
 

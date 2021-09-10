@@ -258,6 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myNick: {fileID: 0}
   myTurn: 0
+  pv: {fileID: 0}
 --- !u!1 &387528324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,7 +1082,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1958613931}
-        m_MethodName: ReturnToMenuButton
+        m_MethodName: PassTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

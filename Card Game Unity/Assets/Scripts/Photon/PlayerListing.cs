@@ -12,7 +12,8 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     public TextMeshProUGUI myNick;
     public bool myTurn;
 
-    PhotonView pv;
+    [HideInInspector] 
+    public PhotonView pv;
 
     private void Awake()
     {

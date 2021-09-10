@@ -37,7 +37,7 @@ public class CanvasController : MonoBehaviourPunCallbacks
 
     public void PassTurn()
     {
-
+        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
     }
 
     public override void OnDisconnected(DisconnectCause cause)

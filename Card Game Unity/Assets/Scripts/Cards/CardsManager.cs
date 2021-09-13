@@ -49,5 +49,6 @@ public class CardsManager : MonoBehaviourPunCallbacks
         transform.position = transform.position + new Vector3(0, 2, 0); // sobe o deck de cartas ja retirada
 
         CanInteract = false; // impede de interagir novamente
+        
     }
 }

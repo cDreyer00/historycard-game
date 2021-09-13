@@ -20,6 +20,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     public int myID;
     public List<int> playerIDs = new List<int>();
 
+    public static int curTurn;
     private void Awake()
     {
         instance = this;
@@ -28,21 +29,26 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     {
         // referencia o PV e puxa a função de listar player
         pv = GetComponent<PhotonView>();
-        pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
 
-        if(PhotonNetwork.IsMasterClient && pv.IsMine)
+        if (pv.IsMine)
         {
-            Debug.Log("Master Entrou");
-            pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+            Debug.Log("Pv IS mine");
+
+            pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
         }
+        else
+        {
+            Debug.Log("Pv isnt mine");
+            Destroy(gameObject);
+            //pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
 
-
+        }
     }
 
     
     void Update()
     {
-
+       
     }
 
     [PunRPC]
@@ -54,27 +60,34 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
 
-        myNick = newText.GetComponent<TextMeshProUGUI>();
+        if (pv.IsMine)
+        {
+            myNick = newText.GetComponent<TextMeshProUGUI>();
+            myID = newText.GetComponent<PhotonView>().ViewID;
+        }
 
-        myID = newText.GetComponent<PhotonView>().ViewID;
         playerIDs.Add(newText.GetComponent<PhotonView>().ViewID);
 
     }
 
     [PunRPC]
-    public void TurnCheck(bool _MyTurn) // Muda a cor do nick de acordo com o turno do player
+    public void TurnCheck(int turn) // Muda a cor do nick de acordo com o turno do player
     {
-        if (_MyTurn)
+        if(curTurn >= playerIDs.Count)
+        {
+            curTurn = turn = 0;
+        }
+
+        if(myID == playerIDs[turn])
         {
             Debug.Log("Meu turno");
-            myTurn = _MyTurn;
+            myTurn = true;
             myNick.color = Color.green;
-
         }
         else
         {
             Debug.Log("Passei turno");
-            myTurn = _MyTurn;
+            myTurn = false;
             myNick.color = Color.white;
         }
     }

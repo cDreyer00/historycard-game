@@ -24,7 +24,7 @@ public class CanvasController : MonoBehaviourPunCallbacks
         roomCode.text = Connection.RoomCode; // mostra o código da sala no canvas
 
         visualizePanel = GameObject.Find("CardsVisualizer_Panel");
-        visualizePanel.SetActive(false);
+        //visualizePanel.SetActive(false);
 
 
     }
@@ -37,7 +37,8 @@ public class CanvasController : MonoBehaviourPunCallbacks
 
     public void PassTurn()
     {
-        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
+        PlayerListing.curTurn++;
+        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered, PlayerListing.curTurn);
     }
 
     public override void OnDisconnected(DisconnectCause cause)

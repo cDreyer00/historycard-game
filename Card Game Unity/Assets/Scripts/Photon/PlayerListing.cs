@@ -15,13 +15,12 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     [HideInInspector] 
     public PhotonView pv;
 
-<<<<<<< HEAD
+
     public int myID;
     public List<int> playerIDs = new List<int>();
 
     public static int curTurn;
-=======
->>>>>>> parent of 7ade0e8 (att)
+
     private void Awake()
     {
         instance = this;
@@ -30,33 +29,32 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     {
         // referencia o PV e puxa a função de listar player
         pv = GetComponent<PhotonView>();
+        pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
 
-        if (pv.IsMine)
+        if(PhotonNetwork.IsMasterClient && pv.IsMine)
         {
-<<<<<<< HEAD
+
             Debug.Log("Pv IS mine");
 
             pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
-        }
-        else
-        {
-            Debug.Log("Pv isnt mine");
-            Destroy(gameObject);
-            //pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
 
-=======
             Debug.Log("Master Entrou");
             pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
->>>>>>> parent of 7ade0e8 (att)
+
         }
+
+
+            Debug.Log("Master Entrou");
+            pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+
+        
+
     }
 
     
     void Update()
     {
-       
-<<<<<<< HEAD
-=======
+
         //if (pv.IsMine)
         //{
         //    // chama a função que muda a cor do nick
@@ -69,7 +67,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
         //    }
         //}
->>>>>>> parent of 7ade0e8 (att)
+
     }
 
     [PunRPC]
@@ -81,37 +79,28 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
 
-        if (pv.IsMine)
-        {
-            myNick = newText.GetComponent<TextMeshProUGUI>();
-            myID = newText.GetComponent<PhotonView>().ViewID;
-        }
+        myNick = newText.GetComponent<TextMeshProUGUI>();
 
-<<<<<<< HEAD
+        myID = newText.GetComponent<PhotonView>().ViewID;
+
         playerIDs.Add(newText.GetComponent<PhotonView>().ViewID);
 
-=======
->>>>>>> parent of 7ade0e8 (att)
     }
 
     [PunRPC]
-    public void TurnCheck(int turn) // Muda a cor do nick de acordo com o turno do player
+    public void TurnCheck(bool _MyTurn) // Muda a cor do nick de acordo com o turno do player
     {
-        if(curTurn >= playerIDs.Count)
-        {
-            curTurn = turn = 0;
-        }
-
-        if(myID == playerIDs[turn])
+        if (_MyTurn)
         {
             Debug.Log("Meu turno");
-            myTurn = true;
+            myTurn = _MyTurn;
             myNick.color = Color.green;
+
         }
         else
         {
             Debug.Log("Passei turno");
-            myTurn = false;
+            myTurn = _MyTurn;
             myNick.color = Color.white;
         }
     }

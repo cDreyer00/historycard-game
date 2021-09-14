@@ -1,5 +1,4 @@
-﻿using ExitGames.Client.Photon.StructWrapping;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Pun.Demo.Asteroids;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,14 +12,16 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     public TextMeshProUGUI myNick;
     public bool myTurn;
 
-
     [HideInInspector] 
     public PhotonView pv;
 
+<<<<<<< HEAD
     public int myID;
     public List<int> playerIDs = new List<int>();
 
     public static int curTurn;
+=======
+>>>>>>> parent of 7ade0e8 (att)
     private void Awake()
     {
         instance = this;
@@ -32,6 +33,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
 
         if (pv.IsMine)
         {
+<<<<<<< HEAD
             Debug.Log("Pv IS mine");
 
             pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
@@ -42,6 +44,10 @@ public class PlayerListing : MonoBehaviourPunCallbacks
             Destroy(gameObject);
             //pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
 
+=======
+            Debug.Log("Master Entrou");
+            pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+>>>>>>> parent of 7ade0e8 (att)
         }
     }
 
@@ -49,6 +55,21 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     void Update()
     {
        
+<<<<<<< HEAD
+=======
+        //if (pv.IsMine)
+        //{
+        //    // chama a função que muda a cor do nick
+        //    if (myTurn && myNick.color != Color.green)
+        //    {
+        //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+        //    }
+        //    else if (!myTurn && myNick.color != Color.white)
+        //    {
+        //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
+        //    }
+        //}
+>>>>>>> parent of 7ade0e8 (att)
     }
 
     [PunRPC]
@@ -66,8 +87,11 @@ public class PlayerListing : MonoBehaviourPunCallbacks
             myID = newText.GetComponent<PhotonView>().ViewID;
         }
 
+<<<<<<< HEAD
         playerIDs.Add(newText.GetComponent<PhotonView>().ViewID);
 
+=======
+>>>>>>> parent of 7ade0e8 (att)
     }
 
     [PunRPC]

@@ -31,7 +31,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         pv = GetComponent<PhotonView>();
         pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
 
-        if(PhotonNetwork.IsMasterClient && pv.IsMine)
+        if (PhotonNetwork.IsMasterClient && pv.IsMine)
         {
 
             Debug.Log("Pv IS mine");
@@ -44,13 +44,10 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         }
 
 
-            Debug.Log("Master Entrou");
-            pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
-
-        
+        Debug.Log("Master Entrou");
+        pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
 
     }
-
     
     void Update()
     {

@@ -26,6 +26,7 @@ public class CanvasController : MonoBehaviourPunCallbacks
         visualizePanel = GameObject.Find("CardsVisualizer_Panel");
         visualizePanel.SetActive(false);
 
+        PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
 
     }
 

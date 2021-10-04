@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5916947641485966462}
-  - component: {fileID: 7451550296025731468}
+  - component: {fileID: 8786912154555768004}
+  - component: {fileID: -5269247093845322129}
   m_Layer: 0
   m_Name: Player_Holder
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7451550296025731468
+--- !u!114 &8786912154555768004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,11 +41,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 2142709610728965557}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61361785691eb546a8992500a574564, type: 3}
+  m_Script: {fileID: 11500000, guid: 24e4ec525a30aef459131b28e6f6f481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myNick: {fileID: 0}
+  nickName: 
   myTurn: 0
-  pv: {fileID: 0}
-  myID: 0
-  playerIDs: 
+  pvIsMine: 0
+--- !u!114 &-5269247093845322129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2142709610728965557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

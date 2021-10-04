@@ -13,7 +13,6 @@ public class CanvasController : MonoBehaviourPunCallbacks
 
     public TextMeshProUGUI roomCode;
     public TextMeshProUGUI timerText;
-    public TextMeshProUGUI playerNameText;
 
     PhotonView pv;
     private void Start()
@@ -26,7 +25,7 @@ public class CanvasController : MonoBehaviourPunCallbacks
         visualizePanel = GameObject.Find("CardsVisualizer_Panel");
         visualizePanel.SetActive(false);
 
-        PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Player_Holder", transform.position, transform.rotation);
 
     }
 

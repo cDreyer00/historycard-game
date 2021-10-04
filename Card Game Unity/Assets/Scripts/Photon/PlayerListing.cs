@@ -17,7 +17,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
 
 
     public int myID;
-    public List<int> playerIDs = new List<int>();
+    public List<GameObject> players = new List<GameObject>();
 
     public static int curTurn;
 
@@ -27,60 +27,24 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        // referencia o PV e puxa a função de listar player
         pv = GetComponent<PhotonView>();
-        pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
-
-        if (PhotonNetwork.IsMasterClient && pv.IsMine)
-        {
-
-            Debug.Log("Pv IS mine");
-
-            pv.RPC("NewPlayer", RpcTarget.AllBuffered, PlayerPrefs.GetString("Nick"));
-
-            Debug.Log("Master Entrou");
-            pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
-
-        }
-
-
-        Debug.Log("Master Entrou");
-        pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
-
     }
     
     void Update()
     {
-
-        //if (pv.IsMine)
-        //{
-        //    // chama a função que muda a cor do nick
-        //    if (myTurn && myNick.color != Color.green)
-        //    {
-        //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
-        //    }
-        //    else if (!myTurn && myNick.color != Color.white)
-        //    {
-        //        pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
-        //    }
-        //}
 
     }
 
     [PunRPC]
     public void NewPlayer(string Nick) // cria objeto no canvas de texto com o nome do player que conectou
     {
+
         GameObject newText = PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
 
         newText.transform.SetParent(this.transform);
         newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
-
-        myNick = newText.GetComponent<TextMeshProUGUI>();
-
-        myID = newText.GetComponent<PhotonView>().ViewID;
-
-        playerIDs.Add(newText.GetComponent<PhotonView>().ViewID);
+        newText.GetComponent<TextMeshProUGUI>().fontSize = 30;
 
     }
 
@@ -92,7 +56,6 @@ public class PlayerListing : MonoBehaviourPunCallbacks
             Debug.Log("Meu turno");
             myTurn = _MyTurn;
             myNick.color = Color.green;
-
         }
         else
         {

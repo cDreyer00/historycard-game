@@ -173,4 +173,4 @@ MonoBehaviour:
   myTurn: 0
   pv: {fileID: 0}
   myID: 0
-  playerIDs: 
+  players: []

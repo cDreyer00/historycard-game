@@ -9,34 +9,22 @@ public class PlayerListing : MonoBehaviourPunCallbacks
 {
     public static PlayerListing instance; // singleton 
 
-    public TextMeshProUGUI myNick;
-    public bool myTurn;
-
     [HideInInspector] 
     public PhotonView pv;
 
+    public List<PlayerManager> players = new List<PlayerManager>();
 
-    public int myID;
-    public List<GameObject> players = new List<GameObject>();
-
-    public static int curTurn;
-
+    public int curTurn;
     private void Awake()
     {
         instance = this;
-    }
-    private void Start()
-    {
         pv = GetComponent<PhotonView>();
-    }
-    
-    void Update()
-    {
 
     }
+
 
     [PunRPC]
-    public void NewPlayer(string Nick) // cria objeto no canvas de texto com o nome do player que conectou
+    public void NewPlayer(string Nick, int playerID) // cria objeto no canvas de texto com o nome do player que conectou
     {
 
         GameObject newText = PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
@@ -44,25 +32,72 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         newText.transform.SetParent(this.transform);
         newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
-        newText.GetComponent<TextMeshProUGUI>().fontSize = 30;
 
+        //for (int i = 0; i < players.Count; i++)
+        //{
+        //    if(players[i].nickText == null)
+        //    {
+        //        players[i].nickText = newText.GetComponent<TextMeshProUGUI>();
+        //        break;
+        //    }
+        //}
+        
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Player").Length; i++)
+        {
+            if(GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PhotonView>().ViewID == playerID)
+            {
+                players.Add(GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PlayerManager>());
+                GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PlayerManager>().nickText = newText.GetComponent<TextMeshProUGUI>();
+            }
+        }
     }
 
     [PunRPC]
-    public void TurnCheck(bool _MyTurn) // Muda a cor do nick de acordo com o turno do player
+    public void TurnCheck() // Muda a cor do nick de acordo com o turno do player
     {
-        if (_MyTurn)
+        curTurn++;
+
+        if (curTurn == players.Count)
         {
-            Debug.Log("Meu turno");
-            myTurn = _MyTurn;
-            myNick.color = Color.green;
+            curTurn = 0;
         }
-        else
+
+        for (int i = 0; i < players.Count; i++)
         {
-            Debug.Log("Passei turno");
-            myTurn = _MyTurn;
-            myNick.color = Color.white;
+            if(i == curTurn)
+            {
+                players[i].myTurn = true;
+            }
+            else
+            {
+                players[i].myTurn = false;
+            }
         }
+
+        //if(curTurn == players.Count)
+        //{
+        //    curTurn = 0;
+
+        //    players[curTurn].myTurn = true;
+        //    for (int i = 0; i < players.Count; i++)
+        //    {
+        //        if(i != curTurn)
+        //        {
+        //            players[i].myTurn = false;
+        //        }
+        //    }
+
+        //    if (players[curTurn].myTurn)
+        //    {
+        //        players[curTurn].nickText.color = Color.green;
+        //    }
+        //    else
+        //    {
+        //        players[curTurn].nickText.color = Color.white;
+        //    }
+        //}
+
+
     }
 
 }

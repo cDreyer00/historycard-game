@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -5269247093845322129}
   m_Layer: 0
   m_Name: Player_Holder
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   nickName: 
   myTurn: 0
   pvIsMine: 0
+  nickText: {fileID: 0}
 --- !u!114 &-5269247093845322129
 MonoBehaviour:
   m_ObjectHideFlags: 0

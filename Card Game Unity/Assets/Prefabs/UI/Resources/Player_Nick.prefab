@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 8852520223810563249}
   - component: {fileID: 8852520223810563251}
   - component: {fileID: 8852520223810563250}
-  - component: {fileID: 8852520223810563252}
-  - component: {fileID: -3606147400069644305}
+  - component: {fileID: 6033898299382165083}
   m_Layer: 5
   m_Name: Player_Nick
   m_TagString: Untagged
@@ -135,7 +134,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8852520223810563252
+--- !u!114 &6033898299382165083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,20 +156,3 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-3606147400069644305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8852520223810563248}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b61361785691eb546a8992500a574564, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myNick: {fileID: 0}
-  myTurn: 0
-  pv: {fileID: 0}
-  myID: 0
-  players: []

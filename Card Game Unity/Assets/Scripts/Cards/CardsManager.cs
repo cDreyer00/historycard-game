@@ -11,6 +11,7 @@ public class CardsManager : MonoBehaviourPunCallbacks
 
     bool CanInteract;
 
+    public static PlayerManager _pm;
     void Start()
     {
         CanInteract = true;
@@ -23,9 +24,7 @@ public class CardsManager : MonoBehaviourPunCallbacks
 
     private void OnMouseDown()
     {
-        PlayerManager playerScript = GameObject.Find("Player_Holder(Clone)").GetComponent<PlayerManager>();
-
-        if (CanInteract && playerScript.myTurn)
+        if (CanInteract && _pm.myTurn)
         {
             photonView.RPC("PickCard", RpcTarget.All, Random.Range(0, cards.Length));
         }

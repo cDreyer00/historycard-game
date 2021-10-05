@@ -42,14 +42,20 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void TurnCheck() // checagem de turnos
+    public void TurnCheck(bool firstTurn) // checagem de turnos
     {
-        curTurn++;
+
+        if(!firstTurn)
+            curTurn++;
+        else
+        {
+            CanvasController.instance.startGamePanel.SetActive(false);
+            CanvasController.instance.waitingPanel.SetActive(false);
+        }
 
         if (curTurn == players.Count)
-        {
             curTurn = 0;
-        }
+        
 
         for (int i = 0; i < players.Count; i++)
         {
@@ -64,6 +70,8 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         }
 
         CardsBehaviour.instance.pv.RPC("ResetCards", RpcTarget.AllBuffered);
+
+
 
     }
 

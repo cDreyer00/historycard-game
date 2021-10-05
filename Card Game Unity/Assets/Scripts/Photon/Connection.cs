@@ -41,7 +41,7 @@ public class Connection : MonoBehaviourPunCallbacks
         else
         {
             connectionText.text = "Entrando na sala...";
-
+            RoomCode = MenuController.instance.roomCodeIF.text;
             JoinExistentRoom();
             PhotonNetwork.JoinRoom(MenuController.instance.roomCodeIF.text);
             PlayerPrefs.SetString("Nick", MenuController.instance.nickNameJoinIF.text);
@@ -55,6 +55,7 @@ public class Connection : MonoBehaviourPunCallbacks
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
+        PhotonNetwork.Disconnect();
         Debug.Log("Disconnected for: " + cause);
     }
 
@@ -95,6 +96,7 @@ public class Connection : MonoBehaviourPunCallbacks
     }
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
+        PhotonNetwork.Disconnect();
         Debug.LogError("Cannot create the room");
         connectionText.text = "Não foi possível criar a sala";
 
@@ -103,6 +105,8 @@ public class Connection : MonoBehaviourPunCallbacks
     //gerador de senha de sala
     void RandomKey()
     {
+        RoomCode = "";
+
         int charAmount = Random.Range(4, 5);
         const string glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 

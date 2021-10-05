@@ -27,10 +27,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             PlayerListing.instance.pv.RPC("NewPlayer", RpcTarget.AllBuffered, nickName, GetComponent<PhotonView>().ViewID);
 
             CardsManager._pm = this;
+
+            if(PhotonNetwork.IsMasterClient)
+                CanvasController.instance.waitingPanel.SetActive(false);
+            else
+               CanvasController.instance.startGamePanel.SetActive(false);
         }
         else
         {
-            pvIsMine = false;    
+            pvIsMine = false;   
+
         }
     }
 

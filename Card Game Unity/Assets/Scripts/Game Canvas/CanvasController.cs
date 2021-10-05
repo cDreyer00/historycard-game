@@ -9,7 +9,11 @@ using UnityEngine.SceneManagement;
 public class CanvasController : MonoBehaviourPunCallbacks
 {
     public static CanvasController instance;
+
+    public GameObject startGamePanel, waitingPanel;
+
     public GameObject visualizePanel;
+
 
     public TextMeshProUGUI roomCode;
     public TextMeshProUGUI timerText;
@@ -22,9 +26,6 @@ public class CanvasController : MonoBehaviourPunCallbacks
         pv = GetComponent<PhotonView>();
         roomCode.text = Connection.RoomCode; // mostra o código da sala no canvas
 
-        visualizePanel = GameObject.Find("CardsVisualizer_Panel");
-        visualizePanel.SetActive(false);
-
         PhotonNetwork.Instantiate("Player_Holder", transform.position, transform.rotation);
 
     }
@@ -34,14 +35,19 @@ public class CanvasController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.Disconnect();
     }
-
-    public void PassTurn()
-    {
-        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered);
-    }
-
     public override void OnDisconnected(DisconnectCause cause)
     {
         SceneManager.LoadScene("Main Menu");
     }
+
+    public void StartGame()
+    {
+        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+    }
+    public void PassTurn()
+    {
+        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
+    }
+
+
 }

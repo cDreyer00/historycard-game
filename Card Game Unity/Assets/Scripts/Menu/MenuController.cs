@@ -42,8 +42,6 @@ public class MenuController : MonoBehaviour
         optionsPanel.SetActive(false);
         enterRoomPanel.SetActive(false);
         createRoomPanel.SetActive(false);
-
-        
     }
 
 

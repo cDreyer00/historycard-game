@@ -42,11 +42,23 @@ public class CardsManager : MonoBehaviourPunCallbacks
         CardObject.transform.position = transform.position - new Vector3(0, 2, 0);
         CardObject.GetComponent<SpriteRenderer>().sprite = cards[card];
         CardObject.GetComponent<BoxCollider2D>().size = gameObject.GetComponent<BoxCollider2D>().size;
-
         CardObject.AddComponent<VisualizeCard>();
 
-        transform.position = transform.position + new Vector3(0, 2, 0); // sobe o deck de cartas ja retirada
+        transform.position = new Vector3(transform.position.x, 2, transform.position.z); // sobe o deck de cartas ja retirada
+        CardObject.transform.SetParent(this.transform);
 
         CanInteract = false; // impede de interagir novamente
+    }
+
+
+    public void RestartCards()
+    {
+        if(transform.childCount > 0)
+        {
+            Destroy(transform.GetChild(0).gameObject);
+        }
+
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        CanInteract = true;
     }
 }

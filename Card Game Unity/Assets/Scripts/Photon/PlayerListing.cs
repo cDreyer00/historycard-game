@@ -19,9 +19,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     {
         instance = this;
         pv = GetComponent<PhotonView>();
-
     }
-
 
     [PunRPC]
     public void NewPlayer(string Nick, int playerID) // cria objeto no canvas de texto com o nome do player que conectou
@@ -32,15 +30,6 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         newText.transform.SetParent(this.transform);
         newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
-
-        //for (int i = 0; i < players.Count; i++)
-        //{
-        //    if(players[i].nickText == null)
-        //    {
-        //        players[i].nickText = newText.GetComponent<TextMeshProUGUI>();
-        //        break;
-        //    }
-        //}
         
         for (int i = 0; i < GameObject.FindGameObjectsWithTag("Player").Length; i++)
         {
@@ -53,7 +42,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void TurnCheck() // Muda a cor do nick de acordo com o turno do player
+    public void TurnCheck() // checagem de turnos
     {
         curTurn++;
 
@@ -74,29 +63,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
             }
         }
 
-        //if(curTurn == players.Count)
-        //{
-        //    curTurn = 0;
-
-        //    players[curTurn].myTurn = true;
-        //    for (int i = 0; i < players.Count; i++)
-        //    {
-        //        if(i != curTurn)
-        //        {
-        //            players[i].myTurn = false;
-        //        }
-        //    }
-
-        //    if (players[curTurn].myTurn)
-        //    {
-        //        players[curTurn].nickText.color = Color.green;
-        //    }
-        //    else
-        //    {
-        //        players[curTurn].nickText.color = Color.white;
-        //    }
-        //}
-
+        CardsBehaviour.instance.pv.RPC("ResetCards", RpcTarget.AllBuffered);
 
     }
 

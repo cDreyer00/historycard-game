@@ -6,7 +6,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-
 public class Connection : MonoBehaviourPunCallbacks
 {
     public static Connection instance;

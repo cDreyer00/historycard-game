@@ -16,12 +16,6 @@ public class CardsBehaviour : MonoBehaviour
         pv = GetComponent<PhotonView>();
     }
 
-
-    private void Update()
-    {
-
-    }
-
     [PunRPC]
     public void ResetCards()
     {

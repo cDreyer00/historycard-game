@@ -19,6 +19,7 @@ public class CanvasController : MonoBehaviourPunCallbacks
     public TextMeshProUGUI timerText;
 
     PhotonView pv;
+
     private void Start()
     {
         instance = this;
@@ -33,7 +34,14 @@ public class CanvasController : MonoBehaviourPunCallbacks
 
     public void ReturnToMenuButton()
     {
-        PhotonNetwork.Disconnect();
+        for (int i = 0; i < PlayerListing.instance.players.Count; i++)
+        {
+            if (PlayerListing.instance.players[i].pvIsMine)
+            {
+                PlayerListing.instance.pv.RPC("PlayerOut", RpcTarget.All, i);
+            }
+        }
+
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -48,6 +56,4 @@ public class CanvasController : MonoBehaviourPunCallbacks
     {
         PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
     }
-
-
 }

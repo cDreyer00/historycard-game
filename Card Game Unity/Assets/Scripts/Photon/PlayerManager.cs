@@ -35,8 +35,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            pvIsMine = false;   
-
+            pvIsMine = false;
         }
     }
 

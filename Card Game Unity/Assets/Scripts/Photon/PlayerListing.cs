@@ -13,6 +13,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     public PhotonView pv;
 
     public List<PlayerManager> players = new List<PlayerManager>();
+    public PlayerManager newPlayer;
 
     public int curTurn;
     private void Awake()
@@ -22,7 +23,7 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void NewPlayer(string Nick, int playerID) // cria objeto no canvas de texto com o nome do player que conectou
+    public void NewPlayer(string Nick) // cria objeto no canvas de texto com o nome do player que conectou
     {
 
         GameObject newText = PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
@@ -30,17 +31,19 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         newText.transform.SetParent(this.transform);
         newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
         newText.GetComponent<TextMeshProUGUI>().text = Nick;
-        
-        
-        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Player").Length; i++)
-        {
-            if(GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PhotonView>().ViewID == playerID)
-            {
-                players.Add(GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PlayerManager>());
-                GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PlayerManager>().nickText = newText.GetComponent<TextMeshProUGUI>();
-                newText.GetComponent<NickPlayerCheck>().player = GameObject.FindGameObjectsWithTag("Player")[i];
-            }
-        }
+
+        newPlayer.nickText = newText.GetComponent<TextMeshProUGUI>();
+        //newText.GetComponent<NickPlayerCheck>().player = newPlayer.gameObject;
+
+        //for (int i = 0; i < GameObject.FindGameObjectsWithTag("Player").Length; i++)
+        //{
+        //    if (GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PhotonView>().ViewID == playerID)
+        //    {
+        //        players.Add(GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PlayerManager>());
+        //        GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PlayerManager>().nickText = newText.GetComponent<TextMeshProUGUI>();
+        //        newText.GetComponent<NickPlayerCheck>().player = GameObject.FindGameObjectsWithTag("Player")[i];
+        //    }
+        //}
     }
 
     [PunRPC]

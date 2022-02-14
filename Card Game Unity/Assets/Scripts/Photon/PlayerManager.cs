@@ -23,8 +23,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             pvIsMine = true;
 
-            nickName = PlayerPrefs.GetString("Nick");
-            PlayerListing.instance.pv.RPC("NewPlayer", RpcTarget.AllBuffered, nickName, GetComponent<PhotonView>().ViewID);
+
+            //PlayerListing.instance.pv.RPC("NewPlayer", RpcTarget.AllBuffered, nickName, GetComponent<PhotonView>().ViewID);
+            pv.RPC("AddToPlayers", RpcTarget.AllBuffered);
+            PlayerListing.instance.newPlayer = this;
+            //PlayerListing.instance.pv.RPC("NewPlayer", RpcTarget.AllBuffered, nickName);
+
 
             CardsManager._pm = this;
 
@@ -37,6 +41,21 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         {
             pvIsMine = false;
         }
+    }
+
+    [PunRPC]
+    public void AddToPlayers()
+    {
+        PlayerListing.instance.players.Add(this);
+        nickName = PlayerPrefs.GetString("Nick");
+
+        GameObject newText = PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
+
+        newText.transform.SetParent(PlayerListing.instance.transform);
+        newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+        newText.GetComponent<TextMeshProUGUI>().text = nickName;
+
+        nickText = newText.GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()

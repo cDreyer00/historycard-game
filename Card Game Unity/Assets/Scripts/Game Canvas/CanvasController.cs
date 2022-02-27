@@ -20,6 +20,8 @@ public class CanvasController : MonoBehaviourPunCallbacks
 
     PhotonView pv;
 
+    public bool gameStarted;
+
     private void Start()
     {
         instance = this;
@@ -29,31 +31,45 @@ public class CanvasController : MonoBehaviourPunCallbacks
 
         PhotonNetwork.Instantiate("Player_Holder", transform.position, transform.rotation);
 
+        CheckStartGame();
     }
 
+    public void CheckStartGame()
+    {
+        if (gameStarted)
+        {
+           startGamePanel.SetActive(false);
+           waitingPanel.SetActive(false);
+        }
+    }
 
     public void ReturnToMenuButton()
     {
-        for (int i = 0; i < PlayerListing.instance.players.Count; i++)
-        {
-            if (PlayerListing.instance.players[i].pvIsMine)
-            {
-                PlayerListing.instance.pv.RPC("PlayerOut", RpcTarget.All, i);
-            }
-        }
-
-    }
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        SceneManager.LoadScene("Main Menu");
+        PhotonNetwork.Disconnect();
     }
 
     public void StartGame()
     {
-        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered, true);
+        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBufferedViaServer);
     }
     public void PassTurn()
     {
-        PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBuffered, false);
+        var playerList = PlayerListing.instance.players;
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            if (playerList[i].player.myTurn && playerList[i].player.pvIsMine)
+            {
+                PlayerListing.instance.pv.RPC("TurnCheck", RpcTarget.AllBufferedViaServer);
+            }
+            else if(playerList[i].player.myTurn && !playerList[i].player.pvIsMine)
+            {
+                Debug.Log("Isnt my turn");
+            }
+        }
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }

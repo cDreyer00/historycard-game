@@ -9,6 +9,7 @@ using UnityEngine;
 public class Connection : MonoBehaviourPunCallbacks
 {
     public static Connection instance;
+    public static string nickname;
 
     public TextMeshProUGUI connectionText;
     public static string RoomCode;
@@ -35,7 +36,7 @@ public class Connection : MonoBehaviourPunCallbacks
             connectionText.text = "Criando Sala...";
 
             CreateRoom();
-            PlayerPrefs.SetString("Nick", MenuController.instance.nickNameCreateIF.text);
+            nickname = MenuController.instance.nickNameCreateIF.text;
         }
         else
         {
@@ -43,7 +44,7 @@ public class Connection : MonoBehaviourPunCallbacks
             RoomCode = MenuController.instance.roomCodeIF.text;
             JoinExistentRoom();
             PhotonNetwork.JoinRoom(MenuController.instance.roomCodeIF.text);
-            PlayerPrefs.SetString("Nick", MenuController.instance.nickNameJoinIF.text);
+            nickname = MenuController.instance.nickNameJoinIF.text;
         }
     }
     
@@ -64,7 +65,7 @@ public class Connection : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Game Scene");
 
     }
-
+ 
     void JoinExistentRoom()
     {
         Debug.Log("Entering...");

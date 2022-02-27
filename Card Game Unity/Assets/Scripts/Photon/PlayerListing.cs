@@ -12,58 +12,39 @@ public class PlayerListing : MonoBehaviourPunCallbacks
     [HideInInspector] 
     public PhotonView pv;
 
-    public List<PlayerManager> players = new List<PlayerManager>();
-    public PlayerManager newPlayer;
-
+    public List<AddPlayer> players = new List<AddPlayer>();
     public int curTurn;
+
     private void Awake()
     {
         instance = this;
         pv = GetComponent<PhotonView>();
     }
 
-    [PunRPC]
-    public void NewPlayer(string Nick) // cria objeto no canvas de texto com o nome do player que conectou
+    public void Update()
     {
-
-        GameObject newText = PhotonNetwork.Instantiate("Player_Nick", transform.position, transform.rotation);
-
-        newText.transform.SetParent(this.transform);
-        newText.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-        newText.GetComponent<TextMeshProUGUI>().text = Nick;
-
-        newPlayer.nickText = newText.GetComponent<TextMeshProUGUI>();
-        //newText.GetComponent<NickPlayerCheck>().player = newPlayer.gameObject;
-
-        //for (int i = 0; i < GameObject.FindGameObjectsWithTag("Player").Length; i++)
-        //{
-        //    if (GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PhotonView>().ViewID == playerID)
-        //    {
-        //        players.Add(GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PlayerManager>());
-        //        GameObject.FindGameObjectsWithTag("Player")[i].GetComponent<PlayerManager>().nickText = newText.GetComponent<TextMeshProUGUI>();
-        //        newText.GetComponent<NickPlayerCheck>().player = GameObject.FindGameObjectsWithTag("Player")[i];
-        //    }
-        //}
+        foreach (var element in players)
+        {
+            if (element.player == null)
+            {
+                Destroy(element.playerNick);
+                players.Remove(element);
+                instance.pv.RPC("TurnCheck", RpcTarget.AllBufferedViaServer);
+            }
+        }
     }
 
     [PunRPC]
-    public void PlayerOut(int posPlayerList)
+    public void TurnCheck() // checagem de turnos
     {
-        players.RemoveAt(posPlayerList);
-        PhotonNetwork.Disconnect();
-    }
-
-    [PunRPC]
-    public void TurnCheck(bool firstTurn) // checagem de turnos
-    {
-        if (!firstTurn)
+        if (CanvasController.instance.gameStarted)
         {
             curTurn++;
         }
         else
         {
-            CanvasController.instance.startGamePanel.SetActive(false);
-            CanvasController.instance.waitingPanel.SetActive(false);
+            CanvasController.instance.gameStarted = true;
+            CanvasController.instance.CheckStartGame();
         }
 
         if (curTurn >= players.Count)
@@ -75,15 +56,20 @@ public class PlayerListing : MonoBehaviourPunCallbacks
         {
             if(i == curTurn)
             {
-                players[i].myTurn = true;
+                players[i].player.myTurn = true;
             }
             else
             {
-                players[i].myTurn = false;
+                players[i].player.myTurn = false;
             }
         }
 
         CardsBehaviour.instance.pv.RPC("ResetCards", RpcTarget.AllBuffered);
     }
+}
 
+public class AddPlayer
+{
+    public PlayerManager player;
+    public GameObject playerNick;
 }
